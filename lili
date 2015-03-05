@@ -1,0 +1,168 @@
+import java.util.Arrays;
+
+
+public class tugas1 {
+	
+	public static void main(String[] args){
+//		boolean t = true;
+//		boolean u = false;
+//		System.out.println(t ^ u);
+		//boolean[] temp = new boolean[2];
+		String a = "1010111011011100101110101001100001110110010101000011001000011111";
+		boolean[] temp = new boolean[64];
+		for (int i=0; i<64; i++) {
+			if(a.charAt(i) == '1')
+				temp[i]=true;
+			else
+				temp[i]=false;
+		}
+		
+		int[] ip = {58, 50, 42, 34, 26, 18, 10, 2,
+					60, 52, 44, 36, 28, 20, 12, 4,
+					62, 54, 46, 38, 30, 22, 14, 6,
+					64, 56, 48, 40, 32, 24, 16, 8,
+					57, 49, 41, 33, 25, 17, 9, 1,
+					59, 51, 43, 35, 27, 19, 11, 3,
+					61, 53, 45, 37, 29, 21, 13, 5,
+					63, 55, 47, 39, 31, 23, 15, 7};
+		
+		//initial permuatation
+		boolean[] hasilIP = hasilTable(temp, ip);
+		
+		//key
+		String b = "1010000100100011010001010110011110001001101010111100110111101111";
+		
+		boolean[] tempKey = new boolean[64];
+		
+		for (int i=0; i<64; i++) {
+			if(b.charAt(i) == '1')
+				tempKey[i]=true;
+			else
+				tempKey[i]=false;
+		}
+		
+		int[] pcol = {57, 49, 41, 33, 25, 17, 9,
+						1, 58, 50, 42, 34, 26, 18,
+						10, 2, 59, 51, 43, 35, 27,
+						19, 11, 3, 60, 52, 44, 36};
+		
+		boolean[] pcoLeft = hasilTable(tempKey, pcol);
+		
+		
+		int[] pcor = {63, 55, 47, 39, 31, 23, 15,
+						7, 62, 54, 46, 38, 30, 22,
+						14, 6, 61, 53, 45, 37, 29,
+						21, 13, 5, 28, 20, 12, 4};
+		
+		boolean[] pcoRight = hasilTable(tempKey, pcor);
+		
+		pcoLeft = hasilShift(pcoLeft, 1);
+		pcoRight = hasilShift(pcoRight, 1);
+		
+		System.out.println("");
+		for(int i=0; i < 28; i++){
+			if(pcoLeft[i]==true)
+				System.out.print("1");
+			else
+				System.out.print("0");
+		}
+		
+		System.out.println("");
+		for(int i=0; i < 28; i++){
+			if(pcoRight[i]==true)
+				System.out.print("1");
+			else
+				System.out.print("0");
+		}
+		
+		int[] pc2 = {14, 17, 11, 24, 1, 5, 3, 28,
+					15, 6, 21, 10, 23, 19, 12, 4,
+					26, 8, 16, 7, 27, 20, 13, 2,
+					41, 52, 31, 37, 47, 55, 30, 40,
+					51, 45, 33, 48, 44, 49, 39, 56,
+					34, 53, 46, 42, 50, 36, 29, 32};
+		
+		boolean[] pct = new boolean[pcoLeft.length + pcoRight.length];
+		
+		System.arraycopy(pcoLeft, 0, pct, 0, pcoLeft.length);
+		System.arraycopy(pcoRight, 0, pct, pcoLeft.length, pcoRight.length);
+		
+		pct = hasilTable(pct, pc2);
+		
+		boolean[] rn = new boolean[32];
+		boolean[] ln = new boolean[32];
+		
+		for (int i=0; i<32; i++) {
+			ln[i] = hasilIP[i];
+			rn[i] = hasilIP[i+32];
+		}
+		
+		int[] exp = {32, 1, 2, 3, 4, 5,
+					4, 5, 6, 7, 8, 9,
+					8, 9, 10, 11, 12, 13,
+					12, 13, 14, 15, 16, 17,
+					16, 17, 18, 19, 20, 21,
+					20, 21, 22, 23, 24, 25,
+					24, 25, 25, 27, 28, 29,
+					28, 29, 30, 31, 32, 1};
+		
+		boolean[] hasilExp = hasilTable(rn, exp);
+		
+		boolean[] hasilXor = hasilXor(hasilExp, pct);
+		
+		//permutation function, asumsikan udh subsitution
+		int[] pf = {16, 7, 20, 21, 29, 12, 28, 17,
+					1, 15, 23, 26, 5, 18, 31, 10,
+					2, 8, 24, 14, 32, 27, 3, 9,
+					19, 13, 30, 6, 22, 11, 4, 25};
+		
+		
+		
+		System.out.println("");
+		for(int i=0; i < 64; i++){
+			if(hasilIP[i]==true)
+				System.out.print("1");
+			else
+				System.out.print("0");
+		}
+		
+		System.out.println("");
+		for(int i=0; i < 48; i++){
+			if(pct[i]==true)
+				System.out.print("1");
+			else
+				System.out.print("0");
+		}
+		
+		System.out.println("");
+		for(int i=0; i < 48; i++){
+			if(hasilXor[i]==true)
+				System.out.print("1");
+			else
+				System.out.print("0");
+		}
+		
+	}
+	
+	public static boolean[] hasilTable(boolean[] a, int[]b){
+		boolean[] hasil = new boolean[b.length];
+		for (int i=0; i<b.length; i++){
+			hasil[i]=a[b[i]-1];
+		}
+		return hasil;
+	}
+	
+	public static boolean[] hasilXor(boolean[]a, boolean[]b) {
+		boolean[] temp = new boolean[a.length];
+		for (int i=0; i<a.length; i++) {
+			temp[i]= (a[i] ^ b[i]);
+		} return temp;
+	}
+	
+	public static boolean[] hasilShift(boolean[] a, int b) {
+		boolean[] temp = new boolean[a.length];
+		for(int i=0; i<a.length; i++){
+			temp[i]=a[(i+b+a.length)%a.length];
+		} return temp;
+	}
+}
