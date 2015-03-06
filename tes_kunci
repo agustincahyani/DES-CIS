@@ -15,9 +15,10 @@ public class coba {
 		String g = rd.readLine();
 		boolean[] kunci = new boolean[64];
 		while(u < g.length()){
-			kunci = key(kunci, g.charAt(u), u/4);
+			key(kunci, g.charAt(u), u*4);
+			System.out.print(g.charAt(u));
+			System.out.println(u*4);
 			u++;
-			//System.out.println(input.nextToken());
 		}
 		
 		System.out.println("");
