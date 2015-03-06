@@ -34,20 +34,32 @@ public class DES {
 			 2,  1, 14,  7,  4, 10,  8, 13, 15, 12,  9,  0,  3,  5,  6, 11
 		};
 
-	public static void main(String[] args) {
-		
-		
-		
+	public static void main(String[] args) {		
 		boolean[] in = {true, false, false, false, false, false};
 		int trial = getSBoxSub(in, 1);
 		System.out.println(trial);
+		System.out.println(Integer.toBinaryString(trial));
+		String a = "101011101101110010111010100110000111011001010101";
+		System.out.println(a.length());
+		boolean[] temp = new boolean[64];
+		for (int i=0; i<a.length(); i++) {
+			if(a.charAt(i) == '1')
+				temp[i]=true;
+			else
+				temp[i]=false;
+		}
 		
+		boolean[] coba = new boolean[32];
+		coba = getSBoxSub(temp).clone();
+		for (int j=0; j<coba.length; j++) {
+			System.out.println(coba[j] + " ");
+		}
 		
 	}
 	
-	public boolean[] splitToSix(boolean[] in, int level){
+	public static boolean[] splitToSix(boolean[] in, int level){ //level adalah variabel yang menentukan 8 level bagian
 		boolean[] out = new boolean[6];
-		int start = level-1*6;
+		int start = (level-1)*6;
 		for (int i = 0; i < out.length; i++){
 			out[i] = in[start];
 			start++;
@@ -73,6 +85,42 @@ public class DES {
 		int startSBox = (sBoxNum - 1) * 64;
 		result = startSBox + (row * 16) + col;
 		return SBox[result];
+		
+	}
+	
+	public static String getBinaryString(int SBoxSub){
+		return Integer.toBinaryString(SBoxSub);
+	}
+	
+	public static boolean[] getSBoxSub(boolean[] in){ //panjang in = 48
+		boolean[] everySix = new boolean[6];
+		int sub = 0;
+		String preResult = "";
+		String tempResult = "";
+		boolean[] result = new boolean[32];
+		for (int i = 1; i <= 8; i++){
+			everySix = splitToSix(in, i).clone();
+			sub = getSBoxSub(everySix, i);
+			tempResult = Integer.toBinaryString(sub);
+			if(tempResult.length() == 3){
+				preResult += "0" + tempResult;
+			} else if (tempResult.length() == 2){
+				preResult += "00" + tempResult;
+			} else if (tempResult.length() == 1){
+				preResult += "000" + tempResult;
+			} else {
+				preResult += tempResult;
+			}
+		}
+		for (int j = 0; j < preResult.length(); j++){
+			if(preResult.charAt(j) == '1')
+				result[j]=true;
+			else
+				result[j]=false;
+		}
+		System.out.println(preResult);
+		return result;
+		
 		
 	}
 }
