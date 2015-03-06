@@ -1,0 +1,91 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.StringTokenizer;
+
+
+public class coba {
+
+	public static void main(String[] args) throws IOException{
+//		String a = "a";
+//		System.out.println(Character.toUpperCase(a.charAt(0)));
+		BufferedReader rd = new BufferedReader(new FileReader ("key.txt"));
+		//StringTokenizer input = new StringTokenizer(rd.readLine(), "");
+		int u = 0;
+		String g = rd.readLine();
+		boolean[] kunci = new boolean[64];
+		while(u < g.length()){
+			kunci = key(kunci, g.charAt(u), u/4);
+			u++;
+			//System.out.println(input.nextToken());
+		}
+		
+		System.out.println("");
+		for(int i=0; i < 64; i++){
+			if(kunci[i]==true)
+				System.out.print("1");
+			else
+				System.out.print("0");
+		}
+		
+//		String b = "lalaljifuigei";
+//		System.out.println(b.charAt(100));
+//		
+	}
+	
+	public static boolean[] key(boolean[] a, char b, int c){
+		switch(Character.toUpperCase(b)) {
+			case '0':
+		        a[c]=false; a[c+1]=false; a[c+2]=false; a[c+3]=false;
+		        break;
+		    case '1':
+		    	 a[c]=false; a[c+1]=false; a[c+2]=false; a[c+3]=true;
+		        break;
+		    case '2':
+		    	a[c]=false; a[c+1]=false; a[c+2]=true; a[c+3]=false;
+		    	break;
+		    case '3':
+		    	a[c]=false; a[c+1]=false; a[c+2]=true; a[c+3]=true;
+		    	break;
+		    case '4':
+		    	a[c]=false; a[c+1]=true; a[c+2]=false; a[c+3]=false;
+		    	break;
+		    case '5':
+		    	a[c]=false; a[c+1]=true; a[c+2]=false; a[c+3]=true;
+		    	break;
+		    case '6':
+		    	a[c]=false; a[c+1]=true; a[c+2]=true; a[c+3]=false;
+		    	break;
+		    case '7':
+		    	a[c]=false; a[c+1]=true; a[c+2]=true; a[c+3]=true;
+		    	break;
+		    case '8':
+		    	a[c]=true; a[c+1]=false; a[c+2]=false; a[c+3]=false;
+		    	break;
+		    case '9':
+		    	a[c]=true; a[c+1]=false; a[c+2]=false; a[c+3]=true;
+		    	break;
+		    case 'A':
+		    	a[c]=true; a[c+1]=false; a[c+2]=true; a[c+3]=false;
+		    	break;
+		    case 'B':
+		    	a[c]=true; a[c+1]=false; a[c+2]=true; a[c+3]=true;
+		    	break;
+		    case 'C':
+		    	a[c]=true; a[c+1]=true; a[c+2]=false; a[c+3]=false;
+		    	break;
+		    case 'D':
+		    	a[c]=true; a[c+1]=true; a[c+2]=false; a[c+3]=true;
+		    	break;
+		    case 'E':
+		    	a[c]=true; a[c+1]=true; a[c+2]=true; a[c+3]=false;
+		    	break;
+		    case 'F':
+		    	a[c]=true; a[c+1]=true; a[c+2]=true; a[c+3]=true;
+		    	break;
+		    default:
+		    	System.out.println("kunci salah");
+		    	System.exit(0);
+		} return a;
+	}
+}
