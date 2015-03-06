@@ -88,10 +88,6 @@ public class DES {
 		
 	}
 	
-	public static String getBinaryString(int SBoxSub){
-		return Integer.toBinaryString(SBoxSub);
-	}
-	
 	public static boolean[] getSBoxSub(boolean[] in){ //panjang in = 48
 		boolean[] everySix = new boolean[6];
 		int sub = 0;
