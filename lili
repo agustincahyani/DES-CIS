@@ -1,32 +1,44 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.StringTokenizer;
 
 
 public class tugas1 {
 	
-	public static void main(String[] args){
+	public static void main(String[] args) throws IOException{
 //		boolean t = true;
 //		boolean u = false;
 //		System.out.println(t ^ u);
 		//boolean[] temp = new boolean[2];
 		
-		String a = "1010111011011100101110101001100001110110010101000011001000011111";
-		boolean[] temp = new boolean[64];
-		for (int i=0; i<64; i++) {
-			if(a.charAt(i) == '1')
-				temp[i]=true;
-			else
-				temp[i]=false;
+		File file = new File("tes.txt");
+		byte[] data = new byte[(int) file.length()];
+		FileInputStream in = new FileInputStream(file);
+		in.read(data);
+		in.close();
+		
+		//read key
+		BufferedReader rd = new BufferedReader(new FileReader ("key.txt"));
+		StringTokenizer input = new StringTokenizer(rd.readLine(), "");
+		int u = 0;
+		boolean[] kunci = new boolean[64];
+		while(input.hasMoreTokens()){
+			kunci = key(kunci, input.nextToken(), u);
+			u+=4;
 		}
 		
-		String b = "1010000100100011010001010110011110001001101010111100110111101111";
+		boolean jalan = false;
+		if(data.length >= 8){
+			jalan = true;
+		}
 		
-		boolean[] tempKey = new boolean[64];
-		
-		for (int i=0; i<64; i++) {
-			if(b.charAt(i) == '1')
-				tempKey[i]=true;
-			else
-				tempKey[i]=false;
+		while (jalan) {
+			// jalanin des
 		}
 		
 		int[] ip = {58, 50, 42, 34, 26, 18, 10, 2,
@@ -164,4 +176,89 @@ public class tugas1 {
 			temp[i]=a[(i+b+a.length)%a.length];
 		} return temp;
 	}
+	
+	//asusmsikan array masukan 8
+	public static boolean[] blok64(byte[] a){
+		boolean[] b = new boolean[64];
+		for(int i=0; i < 64; i++) {
+			b[i] = (a[i/8] & (1 << (i/8))) == 0 ? true: false;
+		} return b;
+	}
+	
+	//buat convert key ke boolean[]
+	public static boolean[] key(boolean[] a, String b, int c){
+		switch(Character.toUpperCase(b.charAt(0))) {
+			case '0':
+		        a[c]=false; a[c+1]=false; a[c+2]=false; a[c+3]=false;
+		        break;
+		    case '1':
+		    	 a[c]=false; a[c+1]=false; a[c+2]=false; a[c+3]=true;
+		        break;
+		    case '2':
+		    	a[c]=false; a[c+1]=false; a[c+2]=true; a[c+3]=false;
+		    	break;
+		    case '3':
+		    	a[c]=false; a[c+1]=false; a[c+2]=true; a[c+3]=true;
+		    	break;
+		    case '4':
+		    	a[c]=false; a[c+1]=true; a[c+2]=false; a[c+3]=false;
+		    	break;
+		    case '5':
+		    	a[c]=false; a[c+1]=true; a[c+2]=false; a[c+3]=true;
+		    	break;
+		    case '6':
+		    	a[c]=false; a[c+1]=true; a[c+2]=true; a[c+3]=false;
+		    	break;
+		    case '7':
+		    	a[c]=false; a[c+1]=true; a[c+2]=true; a[c+3]=true;
+		    	break;
+		    case '8':
+		    	a[c]=true; a[c+1]=false; a[c+2]=false; a[c+3]=false;
+		    	break;
+		    case '9':
+		    	a[c]=true; a[c+1]=false; a[c+2]=false; a[c+3]=true;
+		    	break;
+		    case 'A':
+		    	a[c]=true; a[c+1]=false; a[c+2]=true; a[c+3]=false;
+		    	break;
+		    case 'B':
+		    	a[c]=true; a[c+1]=false; a[c+2]=true; a[c+3]=true;
+		    	break;
+		    case 'C':
+		    	a[c]=true; a[c+1]=true; a[c+2]=false; a[c+3]=false;
+		    	break;
+		    case 'D':
+		    	a[c]=true; a[c+1]=true; a[c+2]=false; a[c+3]=true;
+		    	break;
+		    case 'E':
+		    	a[c]=true; a[c+1]=true; a[c+2]=true; a[c+3]=false;
+		    	break;
+		    case 'F':
+		    	a[c]=true; a[c+1]=true; a[c+2]=true; a[c+3]=true;
+		    	break;
+		    default:
+		    	System.out.println("kunci salah");
+		    	System.exit(0);
+		} return a;
+	}
 }
+
+//String a = "1010111011011100101110101001100001110110010101000011001000011111";
+//boolean[] temp = new boolean[64];
+//for (int i=0; i<64; i++) {
+//	if(a.charAt(i) == '1')
+//		temp[i]=true;
+//	else
+//		temp[i]=false;
+//}
+//
+//String b = "1010000100100011010001010110011110001001101010111100110111101111";
+//
+//boolean[] tempKey = new boolean[64];
+//
+//for (int i=0; i<64; i++) {
+//	if(b.charAt(i) == '1')
+//		tempKey[i]=true;
+//	else
+//		tempKey[i]=false;
+//}
