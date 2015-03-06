@@ -57,7 +57,7 @@ public class DES {
 		
 	}
 	
-	public static boolean[] splitToSix(boolean[] in, int level){ //level adalah variabel yang menentukan 8 level bagian
+	public static boolean[] splitToSix(boolean[] in, int level){ //level (1-8) = setiap 6bit dari 48bit
 		boolean[] out = new boolean[6];
 		int start = (level-1)*6;
 		for (int i = 0; i < out.length; i++){
@@ -67,7 +67,7 @@ public class DES {
 		return out;
 	}
 	
-	public static int getSBoxSub(boolean[] in, int sBoxNum){
+	public static int getSBoxSub(boolean[] in, int sBoxNum){ //SBoxNum dimulai dari 1
 		int first = in[0]? 1 : 0;
 		int second = in[5]? 1 : 0;
 		int row = 2*first + second;
@@ -88,7 +88,7 @@ public class DES {
 		
 	}
 	
-	public static boolean[] getSBoxSub(boolean[] in){ //panjang in = 48
+	public static boolean[] getSBoxSub(boolean[] in){ //panjang in = 48bit
 		boolean[] everySix = new boolean[6];
 		int sub = 0;
 		String preResult = "";
@@ -115,7 +115,7 @@ public class DES {
 				result[j]=false;
 		}
 		System.out.println(preResult);
-		return result;
+		return result; //panjang result = 32bit
 		
 		
 	}
