@@ -1,0 +1,142 @@
+import java.awt.BorderLayout;
+
+
+public class DESGUIBuilder extends JFrame {
+
+	/**
+	 * Launch the application.
+	 */
+	
+	JFileChooser chooser = new JFileChooser();
+	ArrayList<String> list = new ArrayList<String>();
+	String a = "";
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					DESGUIBuilder frame = new DESGUIBuilder();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public DESGUIBuilder() {
+		setTitle("Tugas 1 CIS");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		
+		JPanel panel = new JPanel();
+		getContentPane().add(panel, BorderLayout.NORTH);
+		panel.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		JPanel panel_5 = new JPanel();
+		panel.add(panel_5);
+		
+		JLabel lblDesCipher = new JLabel("DES Cipher");
+		panel_5.add(lblDesCipher);
+		lblDesCipher.setVerticalAlignment(SwingConstants.CENTER);
+		lblDesCipher.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDesCipher.setEnabled(true);
+		lblDesCipher.setFont(new Font("Tahoma", Font.BOLD, 18));
+		
+		JPanel panel_1 = new JPanel();
+		panel.add(panel_1);
+		panel_1.setLayout(new FormLayout(new ColumnSpec[] {
+				ColumnSpec.decode("217px"),
+				ColumnSpec.decode("217px"),},
+			new RowSpec[] {
+				RowSpec.decode("30px"),}));
+		
+		JLabel lblInputFile = new JLabel("Input File");
+		lblInputFile.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblInputFile.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_1.add(lblInputFile, "1, 1, fill, fill");
+		
+		JButton btnChooseFile = new JButton("Choose File");
+		panel_1.add(btnChooseFile, "2, 1, fill, fill");
+		btnChooseFile.addActionListener(new openListener());
+		
+		JPanel panel_3 = new JPanel();
+		panel.add(panel_3);
+		panel_3.setLayout(new FormLayout(new ColumnSpec[] {
+				ColumnSpec.decode("434px"),},
+			new RowSpec[] {
+				RowSpec.decode("30px"),}));
+		
+		JTextPane txtpnFileChoosen = new JTextPane();
+		txtpnFileChoosen.setEditable(false);
+		txtpnFileChoosen.setText("File Choosen:");
+		panel_3.add(txtpnFileChoosen, "1, 1, fill, fill");
+		
+		JPanel panel_2 = new JPanel();
+		getContentPane().add(panel_2, BorderLayout.CENTER);
+		panel_2.setLayout(new FormLayout(new ColumnSpec[] {
+				ColumnSpec.decode("217px"),
+				ColumnSpec.decode("217px"),},
+			new RowSpec[] {
+				RowSpec.decode("100px"),}));
+		
+		JButton btnEncrypt = new JButton("Encrypt");
+		panel_2.add(btnEncrypt, "1, 1, fill, fill");
+		
+		JButton btnDecrypt = new JButton("Decrypt");
+		panel_2.add(btnDecrypt, "2, 1, fill, fill");
+		
+		JPanel panel_4 = new JPanel();
+		getContentPane().add(panel_4, BorderLayout.SOUTH);
+		panel_4.setLayout(new FormLayout(new ColumnSpec[] {
+				ColumnSpec.decode("434px"),},
+			new RowSpec[] {
+				RowSpec.decode("bottom:40px"),}));
+		
+		JTextPane txtpnResultFile = new JTextPane();
+		txtpnResultFile.setEditable(false);
+		txtpnResultFile.setText("Result File:");
+		panel_4.add(txtpnResultFile, "1, 1, fill, fill");
+		
+		String dir = System.getProperty("user.dir");
+		chooser.setCurrentDirectory(new File(dir));
+		
+		
+	}
+	
+	class openListener implements ActionListener {
+		String row;
+
+		public void actionPerformed(ActionEvent e) {
+			int ret = chooser.showOpenDialog(null);
+			if (ret == JFileChooser.APPROVE_OPTION) {
+				File f = chooser.getSelectedFile();
+				FileReader file;
+				try {
+					file = new FileReader(f);
+					BufferedReader input = new BufferedReader(file);
+					row = input.readLine();
+					while (row != null) {
+						list.add(row);
+						row = input.readLine();
+					}
+
+					input.close();
+					for (int i = 0; i < list.size(); i++) {
+						a += list.get(i).toString() + "\n";
+					}
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+			}
+
+		}
+
+	}
+
+
+}
