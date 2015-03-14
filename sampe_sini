@@ -51,21 +51,25 @@ public class tugas1 {
 //		System.out.println(t ^ u);
 		//boolean[] temp = new boolean[2];
 		
-//		File file = new File("tes.txt");
-//		byte[] data = new byte[(int) file.length()];
-//		FileInputStream in = new FileInputStream(file);
-//		in.read(data);
-//		in.close();
+		File file = new File("test.txt");
+		byte[] data = new byte[(int) file.length()];
+		FileInputStream in = new FileInputStream(file);
+		in.read(data);
+		in.close();
+		
+		int ceil = (int) Math.ceil(data.length/8.0);
+		byte[] baru = new byte[ceil*8];
+		System.arraycopy(data, 0, baru, 0, data.length);
 //		
 		//AEDCBA987654321F
-		String a = "1010111011011100101110101001100001110110010101000011001000011111";
-		boolean[] temp = new boolean[64];
-		for (int i=0; i<64; i++) {
-			if(a.charAt(i) == '1')
-				temp[i]=true;
-			else
-				temp[i]=false;
-		}
+//		String a = "1010111011011100101110101001100001110110010101000011001000011111";
+//		boolean[] temp = new boolean[64];
+//		for (int i=0; i<64; i++) {
+//			if(a.charAt(i) == '1')
+//				temp[i]=true;
+//			else
+//				temp[i]=false;
+//		}
 		
 		
 		//read key
@@ -81,14 +85,21 @@ public class tugas1 {
 			u++;
 		}
 		
+//		System.out.println("kunci");
+//		for(int i=0; i < 64; i++){
+//			if(kunci[i]==true)
+//				System.out.print("1");
+//			else
+//				System.out.print("0");
+//		}System.out.println("------------------");
+//		
 		boolean[][] key = generateKey(kunci);
 		
 		//kunci sampe sini
 		
-		boolean jalan = false;
-//		if(data.length >= 8){
-//			jalan = true;
-//		}
+		for(int j=0; j<baru.length; j+=8){
+			boolean[] temp = blok64(baru);
+		}
 //		
 //		while (jalan) {
 //			// jalanin des
@@ -131,12 +142,12 @@ public class tugas1 {
 						12, 13, 14, 15, 16, 17,
 						16, 17, 18, 19, 20, 21,
 						20, 21, 22, 23, 24, 25,
-						24, 25, 25, 27, 28, 29,
+						24, 25, 26, 27, 28, 29,
 						28, 29, 30, 31, 32, 1};
 			
 			boolean[] hasilExp = hasilTable(rn, exp);
 			
-			hasilExp = hasilXor(hasilExp, key[0]);
+			hasilExp = hasilXor(hasilExp, key[i]);
 			
 //			System.out.println("");
 //			for(int i=0; i < 48; i++){
