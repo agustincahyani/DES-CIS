@@ -173,7 +173,7 @@ public class DESGUIBuilder extends JFrame {
 		
 		JTextPane txtpnTheResultFile = new JTextPane();
 		txtpnTheResultFile.setEditable(false);
-		txtpnTheResultFile.setText("The result file will be saved in the same directory as in input file.");
+		txtpnTheResultFile.setText("The result file will be saved in the same directory as the input file.");
 		panel_2.add(txtpnTheResultFile, "1, 3, center, center");
 		
 		JTextPane txtpnNefriSuswita = new JTextPane();
