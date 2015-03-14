@@ -50,6 +50,7 @@ public class DESGUIBuilder extends JFrame {
 	String a = "";
 	private JTextField textField;
 	JTextPane txtpnFileChoosen = new JTextPane();
+	JTextPane txtpnKeyFile = new JTextPane();
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -108,12 +109,40 @@ public class DESGUIBuilder extends JFrame {
 		panel_3.setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("434px"),},
 			new RowSpec[] {
-				RowSpec.decode("30px"),}));
+				FormFactory.DEFAULT_ROWSPEC,}));
 		
 		
 		txtpnFileChoosen.setEditable(false);
 		txtpnFileChoosen.setText("File Choosen:");
 		panel_3.add(txtpnFileChoosen, "1, 1, fill, fill");
+		
+		JPanel panel_4 = new JPanel();
+		panel.add(panel_4);
+		panel_4.setLayout(new FormLayout(new ColumnSpec[] {
+				ColumnSpec.decode("217px"),
+				ColumnSpec.decode("217px:grow"),},
+			new RowSpec[] {
+				RowSpec.decode("30px"),}));
+		
+		JLabel lblKeyFiletxt = new JLabel("Key File (.txt)");
+		lblKeyFiletxt.setFont(new Font("Tahoma", Font.BOLD, 11));
+		panel_4.add(lblKeyFiletxt, "1, 1, center, center");
+		
+		JButton btnChooseFile_1 = new JButton("Choose File");
+		panel_4.add(btnChooseFile_1, "2, 1, fill, fill");
+		btnChooseFile_1.addActionListener(new openKeyListener());
+		
+		JPanel panel_6 = new JPanel();
+		panel.add(panel_6);
+		panel_6.setLayout(new FormLayout(new ColumnSpec[] {
+				ColumnSpec.decode("center:default:grow"),},
+			new RowSpec[] {
+				RowSpec.decode("default:grow"),}));
+		
+		
+		txtpnKeyFile.setEditable(false);
+		txtpnKeyFile.setText("Key File:");
+		panel_6.add(txtpnKeyFile, "1, 1, fill, fill");
 		
 		JPanel panel_2 = new JPanel();
 		getContentPane().add(panel_2, BorderLayout.CENTER);
@@ -121,8 +150,8 @@ public class DESGUIBuilder extends JFrame {
 				ColumnSpec.decode("217px:grow"),
 				ColumnSpec.decode("217px:grow"),},
 			new RowSpec[] {
+				RowSpec.decode("30px"),
 				RowSpec.decode("50px"),
-				RowSpec.decode("100px"),
 				RowSpec.decode("default:grow"),}));
 		
 		JLabel lblYourDesiredResult = new JLabel("Your Desired Result File Name");
@@ -168,6 +197,40 @@ public class DESGUIBuilder extends JFrame {
 				FileReader file;
 				String namaFile = f.getName();
 				txtpnFileChoosen.setText(txtpnFileChoosen.getText() + " " + namaFile);
+				try {
+					file = new FileReader(f);
+					BufferedReader input = new BufferedReader(file);
+					row = input.readLine();
+					while (row != null) {
+						list.add(row);
+						row = input.readLine();
+					}
+
+					input.close();
+					for (int i = 0; i < list.size(); i++) {
+						a += list.get(i).toString() + "\n";
+					}
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+			}
+
+		}
+
+	}
+	
+	class openKeyListener implements ActionListener {
+		String row;
+
+		public void actionPerformed(ActionEvent e) {
+			int ret = chooser.showOpenDialog(null);
+			if (ret == JFileChooser.APPROVE_OPTION) {
+				File f = chooser.getSelectedFile();
+				FileReader file;
+				String namaFile = f.getName();
+				txtpnKeyFile.setText(txtpnKeyFile.getText() + " " + namaFile);
 				try {
 					file = new FileReader(f);
 					BufferedReader input = new BufferedReader(file);
