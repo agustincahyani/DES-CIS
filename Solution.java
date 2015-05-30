@@ -91,6 +91,28 @@ public class Solution {
 		return result;
 	}
 	
+	public static boolean[] o512(boolean[] x){
+		boolean result[] = new boolean[64];
+		boolean satu[] = rotateRight(x,1);
+		boolean lapan[] = rotateRight(x,8);
+		boolean tujuh[] = shiftRight(x,7);
+		for(int i=0; i<64; i++){
+			result[i] = satu[i] ^ lapan[i] ^ tujuh[i]; 
+		}
+		return result;
+	}
+	
+	public static boolean[] i512(boolean[] x){
+		boolean result[] = new boolean[64];
+		boolean sembilanBelas[] = rotateRight(x,19);
+		boolean enamSatu[] = rotateRight(x,61);
+		boolean enam[] = shiftRight(x,6);
+		for(int i=0; i<64; i++){
+			result[i] = sembilanBelas[i] ^ enamSatu[i] ^ enam[i]; 
+		}
+		return result;
+	}
+	
 	public static void printBuffer(boolean[] register){
 		String temp = "";
 		for(int i=0; i<register.length; i++){
