@@ -54,7 +54,7 @@ public class Solution {
 	public static boolean[] rotateRight(boolean[] register, int n){
 		boolean[] result = new boolean[register.length];
 		System.arraycopy(register, register.length-n, result, 0, n);
-		System.arraycopy(register, 0, register, n, register.length-n);
+		System.arraycopy(register, 0, result, n, register.length-n);
 		return result;
 	}
 	public static boolean[] a512(boolean[] a){
@@ -82,6 +82,12 @@ public class Solution {
 		for(int i=0; i<64; i++){
 			result[i] = empatBelas[i] ^ lapanBelas[i] ^ empatSatu[i]; 
 		}
+		return result;
+	}
+	
+	public static boolean[] shiftRight(boolean[] register, int n){
+		boolean[] result = new boolean[register.length];
+		System.arraycopy(register, 0, result, n, register.length-n);
 		return result;
 	}
 	
